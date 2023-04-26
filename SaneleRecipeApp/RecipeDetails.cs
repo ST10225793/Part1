@@ -61,12 +61,12 @@ namespace SaneleRecipeApp
 
         public static void DisplayRecipe()
         {
-            for(int l = 0; l < NumofIngredients; l++) 
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\t" + "Recipe Name: " + RecipeName);
+            for (int l = 0; l < NumofIngredients; l++) 
             { 
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("\t" + "Recipe Name: " + RecipeName);
                 Console.ForegroundColor= ConsoleColor.White;
-                Console.WriteLine("Ingredient Details " + "\n" + "Ingredient Name(s): " + IngrName[l] + "\n"
+                Console.WriteLine("Ingredient Detail " + "\n" + "Ingredient Name: " + IngrName[l] + "\n"
                 + "Ingredient Quantity: " + IngrQuantity[l] + "\n" + "Unit of measurement: " + UnitofMeasurement[l]);
             }
             for(int k = 0; k < NumofSteps; k++)
@@ -77,10 +77,10 @@ namespace SaneleRecipeApp
             Console.WriteLine();
         }
 
-        public static void ScalingQuantity(int[] IngrQuantity)
+        public static void ScalingQuantity()
         {
             int scale;
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Press (1) if you want to use a scale factor of 0.5");
             Console.WriteLine("Press (2) if you want to use a scale factor of 2");
             Console.WriteLine("Press (3) if you want to use a scale factor of 3");
@@ -95,7 +95,7 @@ namespace SaneleRecipeApp
                 {
 
                     IngrQuantity[m] = IngrQuantity[m] * fact1;
-                    //Console.WriteLine("New ingredient quantity: " + IngrQuantity[m] + UnitofMeasurement);
+                   Console.WriteLine("New ingredient quantity: " + IngrQuantity[m] + UnitofMeasurement);
                 }
             }
 

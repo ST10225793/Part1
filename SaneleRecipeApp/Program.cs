@@ -49,7 +49,7 @@ namespace SaneleRecipeApp
                 }
                 if(menu == 3)
                 {
-                    RecipeDetails.ScalingQuantity(IngrQuantity);
+                    RecipeDetails.ScalingQuantity();
                 }
                 if(menu == 4)
                 {
