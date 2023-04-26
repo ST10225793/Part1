@@ -9,6 +9,13 @@ namespace SaneleRecipeApp
     internal class Program
     {
         static int menu;
+        private static String RecipeName;
+        private static int NumofIngredients;
+        private static String[] IngrName;
+        private static int[] IngrQuantity;
+        private static String[] UnitofMeasurement;
+        private static int NumofSteps;
+        private static String[] StepDescription;
         static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
