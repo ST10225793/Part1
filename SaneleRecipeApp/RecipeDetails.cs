@@ -77,7 +77,7 @@ namespace SaneleRecipeApp
             Console.WriteLine();
         }
 
-        public void ScalingQuantity(int[] IngrQuantity)
+        public static void ScalingQuantity(int[] IngrQuantity)
         {
             int scale;
             Console.ForegroundColor = ConsoleColor.Green;
@@ -95,6 +95,7 @@ namespace SaneleRecipeApp
                 {
 
                     IngrQuantity[m] = IngrQuantity[m] * fact1;
+                    //Console.WriteLine("New ingredient quantity: " + IngrQuantity[m] + UnitofMeasurement);
                 }
             }
 
