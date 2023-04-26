@@ -18,7 +18,6 @@ namespace SaneleRecipeApp
         private static String[] StepDescription;
         static void Main(string[] args)
         {
-            RecipeDetails obj = new RecipeDetails(); //calling the Recipe Details class onto the main class
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("\t" + "\t" + "Welcome to Sanele's Recipe App <3");
 
@@ -39,7 +38,7 @@ namespace SaneleRecipeApp
                 menu = Convert.ToInt32(Console.ReadLine());
                 if (menu == 1)
                 {
-                    RecipeDetails.StoreRecipe(); 
+                   RecipeDetails.StoreRecipe(); 
                 }
                 if(menu == 2)
                 {

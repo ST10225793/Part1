@@ -16,17 +16,14 @@ namespace SaneleRecipeApp
         private static int NumofSteps;
         private static String[] StepDescription;
 
-        public String DisplayMenu(int menu)
-        {
-            //Display menu method created so that program continues to run after user is doe with an entry
-            
-            return "";
-        }
+       
         public static void StoreRecipe()
         {
+            Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("Enter name of recipe");
+            Console.WriteLine("Enter name of recipe: ");
             RecipeName = Console.ReadLine();
+            Console.WriteLine("Recipe Name: " + RecipeName ) ;
             Console.WriteLine("Enter number of ingredients");
             NumofIngredients = Convert.ToInt32(Console.ReadLine());
             IngrName = new string[NumofIngredients];
