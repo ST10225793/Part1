@@ -28,6 +28,7 @@ namespace SaneleRecipeApp
             Console.WriteLine("");
             Console.WriteLine("Make a choice");
             menu = Convert.ToInt32(Console.ReadLine());
+
         }
     }
 }
