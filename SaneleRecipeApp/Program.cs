@@ -53,7 +53,7 @@ namespace SaneleRecipeApp
                 }
                 if(menu == 4)
                 {
-
+                    RecipeDetails.resetQuantityValues();
                 }
                 if(menu == 5)
                 {

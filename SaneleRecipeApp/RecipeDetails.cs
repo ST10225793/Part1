@@ -86,16 +86,16 @@ namespace SaneleRecipeApp
             Console.WriteLine("Press (3) if you want to use a scale factor of 3");
             Console.WriteLine("Make a choice");
             scale = Convert.ToInt32(Console.ReadLine());
-            int fact1 = 1/2, fact2 = 2, fact3 = 3;
-
+            //int fact1 = 1/2, fact2 = 2, fact3 = 3;
+            double sum;
 
             if (scale == 1)
             {
                 for (int m = 0; m < NumofIngredients; m++)
                 {
-                    double sum = IngrQuantity[m] * fact1;
-                    //IngrQuantity[m] = IngrQuantity[m] * fact1;
-                   Console.WriteLine("New ingredient quantity: " + sum + UnitofMeasurement);
+                    sum = IngrQuantity[m] * 0.5;
+                    //IngrQuantity[m] = IngrQuantity[m] * 0.5;
+                   Console.WriteLine("New ingredient quantity: " + sum + " " + UnitofMeasurement[m]);
                 }
             }
 
@@ -103,9 +103,9 @@ namespace SaneleRecipeApp
             {
                 for (int m = 0; m < NumofIngredients; m++)
                 {
-
-                    IngrQuantity[m] = IngrQuantity[m] * fact2;
-                    Console.WriteLine("New ingredient quantity: " + IngrQuantity[m] + UnitofMeasurement);
+                    sum = IngrQuantity[m] * 2;
+                    //IngrQuantity[m] = IngrQuantity[m] * 2;
+                    Console.WriteLine("New ingredient quantity: " + sum + " " + UnitofMeasurement[m]);
                 }
             }
 
@@ -113,11 +113,24 @@ namespace SaneleRecipeApp
             {
                 for (int m = 0; m < NumofIngredients; m++)
                 {
-
-                    IngrQuantity[m] = IngrQuantity[m] * fact3;
-                    Console.WriteLine("New ingredient quantity: " + IngrQuantity[m] + UnitofMeasurement);
+                    sum = IngrQuantity[m] * 3;
+                    //IngrQuantity[m] = IngrQuantity[m] * 3;
+                    Console.WriteLine("New ingredient quantity: " + sum + " " + UnitofMeasurement[m]);
                 }
             }
+        }
+        public static void resetQuantityValues()
+        {
+
+            for (int i = 0; i < NumofIngredients; i++)
+            {
+
+                Console.ForegroundColor = ConsoleColor.White;
+                IngrQuantity[i] = IngrQuantity[i] - IngrQuantity[i];
+                Console.WriteLine(IngrQuantity[i]);
+
+            }
+
         }
     }
 }
