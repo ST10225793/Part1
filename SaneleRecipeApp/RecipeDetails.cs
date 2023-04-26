@@ -86,16 +86,16 @@ namespace SaneleRecipeApp
             Console.WriteLine("Press (3) if you want to use a scale factor of 3");
             Console.WriteLine("Make a choice");
             scale = Convert.ToInt32(Console.ReadLine());
-            int fact1 = 1 / 2, fact2 = 2, fact3 = 3;
+            int fact1 = 1/2, fact2 = 2, fact3 = 3;
 
 
             if (scale == 1)
             {
                 for (int m = 0; m < NumofIngredients; m++)
                 {
-
-                    IngrQuantity[m] = IngrQuantity[m] * fact1;
-                   Console.WriteLine("New ingredient quantity: " + IngrQuantity[m] + UnitofMeasurement);
+                    double sum = IngrQuantity[m] * fact1;
+                    //IngrQuantity[m] = IngrQuantity[m] * fact1;
+                   Console.WriteLine("New ingredient quantity: " + sum + UnitofMeasurement);
                 }
             }
 
@@ -105,6 +105,7 @@ namespace SaneleRecipeApp
                 {
 
                     IngrQuantity[m] = IngrQuantity[m] * fact2;
+                    Console.WriteLine("New ingredient quantity: " + IngrQuantity[m] + UnitofMeasurement);
                 }
             }
 
@@ -114,6 +115,7 @@ namespace SaneleRecipeApp
                 {
 
                     IngrQuantity[m] = IngrQuantity[m] * fact3;
+                    Console.WriteLine("New ingredient quantity: " + IngrQuantity[m] + UnitofMeasurement);
                 }
             }
         }
