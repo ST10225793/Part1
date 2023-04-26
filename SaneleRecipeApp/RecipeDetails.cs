@@ -32,8 +32,9 @@ namespace SaneleRecipeApp
 
             for (int i = 0; i < NumofIngredients; i++)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Ingredient details");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("\t" + "\t" + "Ingredient details");
+                Console.WriteLine();
                 Console.WriteLine($"Ingredient no.{i + 1}");
 
                 Console.ForegroundColor = ConsoleColor.White;
@@ -51,9 +52,68 @@ namespace SaneleRecipeApp
             StepDescription = new String[NumofSteps];
             for (int j = 0; j < NumofSteps; j++)
             {
-                Console.WriteLine($"Enter the description for each step {j + 1}");
+                Console.WriteLine($"Enter the description for step {j + 1}");
                 StepDescription[j] = Console.ReadLine();
+                Console.WriteLine();
 
+            }
+        }
+
+        public static void DisplayRecipe()
+        {
+            for(int l = 0; l < NumofIngredients; l++) 
+            { 
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("\t" + "Recipe Name: " + RecipeName);
+                Console.ForegroundColor= ConsoleColor.White;
+                Console.WriteLine("Ingredient Details " + "\n" + "Ingredient Name(s): " + IngrName[l] + "\n"
+                + "Ingredient Quantity: " + IngrQuantity[l] + "\n" + "Unit of measurement: " + UnitofMeasurement[l]);
+            }
+            for(int k = 0; k < NumofSteps; k++)
+            {
+                Console.WriteLine();
+                Console.WriteLine($"Step {k + 1}:" + StepDescription[k]);
+            }
+            Console.WriteLine();
+        }
+
+        public void ScalingQuantity(int[] IngrQuantity)
+        {
+            int scale;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Press (1) if you want to use a scale factor of 0.5");
+            Console.WriteLine("Press (2) if you want to use a scale factor of 2");
+            Console.WriteLine("Press (3) if you want to use a scale factor of 3");
+            Console.WriteLine("Make a choice");
+            scale = Convert.ToInt32(Console.ReadLine());
+            int fact1 = 1 / 2, fact2 = 2, fact3 = 3;
+
+
+            if (scale == 1)
+            {
+                for (int m = 0; m < NumofIngredients; m++)
+                {
+
+                    IngrQuantity[m] = IngrQuantity[m] * fact1;
+                }
+            }
+
+            else if (scale == 2)
+            {
+                for (int m = 0; m < NumofIngredients; m++)
+                {
+
+                    IngrQuantity[m] = IngrQuantity[m] * fact2;
+                }
+            }
+
+            else if (scale == 3)
+            {
+                for (int m = 0; m < NumofIngredients; m++)
+                {
+
+                    IngrQuantity[m] = IngrQuantity[m] * fact3;
+                }
             }
         }
     }

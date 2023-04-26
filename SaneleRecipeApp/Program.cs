@@ -35,6 +35,7 @@ namespace SaneleRecipeApp
                 Console.WriteLine("(5) Clear data to enter new recipe");
                 Console.WriteLine("");
                 Console.WriteLine("Make a choice");
+                Console.WriteLine();
                 menu = Convert.ToInt32(Console.ReadLine());
                 if (menu == 1)
                 {
@@ -42,7 +43,7 @@ namespace SaneleRecipeApp
                 }
                 if(menu == 2)
                 {
-
+                    RecipeDetails.DisplayRecipe();
                 }
                 if(menu == 3)
                 {
