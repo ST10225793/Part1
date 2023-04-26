@@ -139,7 +139,16 @@ namespace SaneleRecipeApp
             }
             Console.WriteLine();
         }
-      
+        public static void Clear(string[] IngrName, int[] IngrQuantity, string[] UnitofMeasurement, string[] StepDescription)
+        {
+            Array.Clear(IngrName, 0, IngrName.Length);
+            Array.Clear(IngrQuantity, 0, IngrQuantity.Length);
+            Array.Clear(UnitofMeasurement, 0, UnitofMeasurement.Length);
+            Array.Clear(StepDescription, 0, StepDescription.Length);
+            Console.WriteLine("Code cleared, Enter new recipe");
+
+
+        }
 
 
     }

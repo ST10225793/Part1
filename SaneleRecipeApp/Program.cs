@@ -57,6 +57,7 @@ namespace SaneleRecipeApp
                 }
                 if(menu == 5)
                 {
+                    RecipeDetails.Clear(IngrName, IngrQuantity, UnitofMeasurement, StepDescription);
 
                 }
                 else if (menu == 6)
