@@ -18,14 +18,15 @@ namespace SaneleRecipeApp
         private static String[] StepDescription;
         static void Main(string[] args)
         {
+            RecipeDetails obj = new RecipeDetails(); //calling the Recipe Details class onto the main class
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("Welcome to Sanele's Recipe App <3");
+            Console.WriteLine("\t" + "\t" + "Welcome to Sanele's Recipe App <3");
 
             Console.WriteLine();
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("Please select one of the following menu items: ");
+            Console.WriteLine("\t" + "Please select one of the following menu items: ");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("(1) Enter details of recipe");
             Console.WriteLine("(2) Display full recipe");
@@ -39,14 +40,24 @@ namespace SaneleRecipeApp
             switch (menu)
             {
                 case 1:
+                    Console.WriteLine();
+                    obj.DisplayMenu(menu);
                     break;
                 case 2:
+                    Console.WriteLine();
+                    obj.DisplayMenu(menu);
                     break;
                 case 3:
+                    Console.WriteLine();
+                    obj.DisplayMenu(menu);
                     break;
                 case 4:
+                    Console.WriteLine();
+                    obj.DisplayMenu(menu);
                     break;
                 case 5:
+                    Console.WriteLine();
+                    obj.DisplayMenu(menu);
                     break;
             }
         }
