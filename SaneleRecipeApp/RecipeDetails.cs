@@ -15,7 +15,7 @@ namespace SaneleRecipeApp
         private static String[] UnitofMeasurement;
         private static int NumofSteps;
         private static String[] StepDescription;
-        private static double sum;
+        private static double scaledQuantity;
 
 
         public static void StoreRecipe()
@@ -94,9 +94,9 @@ namespace SaneleRecipeApp
             {
                 for (int m = 0; m < NumofIngredients; m++)
                 {
-                    sum = IngrQuantity[m] * 0.5;
+                    scaledQuantity = IngrQuantity[m] * 0.5;
                     //IngrQuantity[m] = IngrQuantity[m] * 0.5;
-                   Console.WriteLine("New ingredient quantity: " + sum + " " + UnitofMeasurement[m] +
+                   Console.WriteLine("New ingredient quantity: " + scaledQuantity + " " + UnitofMeasurement[m] +
                         " of" + IngrName[m]);
                 }
             }
@@ -105,9 +105,9 @@ namespace SaneleRecipeApp
             {
                 for (int m = 0; m < NumofIngredients; m++)
                 {
-                    sum = IngrQuantity[m] * 2;
+                    scaledQuantity = IngrQuantity[m] * 2;
                     //IngrQuantity[m] = IngrQuantity[m] * 2;
-                    Console.WriteLine("New ingredient quantity: " + sum + " " + UnitofMeasurement[m] +
+                    Console.WriteLine("New ingredient quantity: " + scaledQuantity + " " + UnitofMeasurement[m] +
                         " of" + IngrName[m]);
                 }
             }
@@ -116,9 +116,9 @@ namespace SaneleRecipeApp
             {
                 for (int m = 0; m < NumofIngredients; m++)
                 {
-                    sum = IngrQuantity[m] * 3;
+                    scaledQuantity = IngrQuantity[m] * 3;
                     //IngrQuantity[m] = IngrQuantity[m] * 3;
-                    Console.WriteLine("New ingredient quantity: " + sum + " " + UnitofMeasurement[m] + 
+                    Console.WriteLine("New ingredient quantity: " + scaledQuantity + " " + UnitofMeasurement[m] + 
                         " of" + IngrName[m]);
                 }
             }
@@ -126,30 +126,67 @@ namespace SaneleRecipeApp
         }
         public static void resetQuantityValues()
         {
-
+            int scale;
             for (int n = 0; n < NumofIngredients; n++)
             {
 
-                Console.ForegroundColor = ConsoleColor.White;
-                //IngrQuantity[n] = IngrQuantity[n] - IngrQuantity[n];
-                IngrQuantity[n] /= 2;
-                Console.WriteLine("Original quantity value of " + IngrName[n] + ":" 
+                Console.WriteLine("Press (1) if you want to reduce the quantity scale factor of 0.5");
+                Console.WriteLine("Press (2) if you want to  reduce the quantity a scale factor of 2");
+                Console.WriteLine("Press (3) if you want to  reduce the quantity a scale factor of 3");
+                Console.WriteLine("Make a choice");
+                scale = Convert.ToInt32(Console.ReadLine());
+                //int fact1 = 1/2, fact2 = 2, fact3 = 3;
+
+                Console.WriteLine();
+                if (scale == 1)
+                {
+                    for (int m = 0; m < NumofIngredients; m++)
+                    {
+                        scaledQuantity = IngrQuantity[m] / 0.5;
+                        //IngrQuantity[m] = IngrQuantity[m] * 0.5;
+                        Console.WriteLine("Original quantity value of " + IngrName[n] + ":"
+                   + IngrQuantity[n] + " " + UnitofMeasurement[n]);
+                    }
+                }
+
+                else if (scale == 2)
+                {
+                    for (int m = 0; m < NumofIngredients; m++)
+                    {
+                        scaledQuantity = IngrQuantity[m] / 2;
+                        //IngrQuantity[m] = IngrQuantity[m] * 2;
+                        Console.WriteLine("Original quantity value of " + IngrName[n] + ":"
+                   + IngrQuantity[n] + " " + UnitofMeasurement[n]);
+                    }
+                }
+
+                else if (scale == 3)
+                {
+                    for (int m = 0; m < NumofIngredients; m++)
+                    {
+                        scaledQuantity = IngrQuantity[m] / 3;
+                        //IngrQuantity[m] = IngrQuantity[m] * 3;
+                        Console.WriteLine("Original quantity value of " + IngrName[n] + ":"
                     + IngrQuantity[n] + " " + UnitofMeasurement[n]);
+                    }
+
+
+                }
+                Console.WriteLine();
+            }
+        }
+            public static void Clear(string[] IngrName, int[] IngrQuantity, string[] UnitofMeasurement, string[] StepDescription)
+            {
+                Array.Clear(IngrName, 0, IngrName.Length);
+                Array.Clear(IngrQuantity, 0, IngrQuantity.Length);
+                Array.Clear(UnitofMeasurement, 0, UnitofMeasurement.Length);
+                Array.Clear(StepDescription, 0, StepDescription.Length);
+                Console.WriteLine("Code cleared, Enter new recipe");
+
 
             }
-            Console.WriteLine();
-        }
-        public static void Clear(string[] IngrName, int[] IngrQuantity, string[] UnitofMeasurement, string[] StepDescription)
-        {
-            Array.Clear(IngrName, 0, IngrName.Length);
-            Array.Clear(IngrQuantity, 0, IngrQuantity.Length);
-            Array.Clear(UnitofMeasurement, 0, UnitofMeasurement.Length);
-            Array.Clear(StepDescription, 0, StepDescription.Length);
-            Console.WriteLine("Code cleared, Enter new recipe");
-
-
         }
 
 
     }
-}
+
