@@ -122,6 +122,68 @@ namespace SaneleRecipeApp
             }
         }
 
+        public static void DisplayRecipe()
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("\tRecipes List:");
+            Console.WriteLine();
+
+            List<Recipe> sortedRecipes = recipes.OrderBy(r => r.Name).ToList();
+
+            for (int k = 0; k < sortedRecipes.Count; k++)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"{k + 1} Recipe Name: {sortedRecipes[k].Name}");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Choose a recipe by entering its number:");
+            int recipeNumber = Convert.ToInt32(Console.ReadLine());
+
+            if (recipeNumber > 0 && recipeNumber <= sortedRecipes.Count)
+            {
+                // Display recipe details
+                Recipe recipe = sortedRecipes[recipeNumber - 1];
+
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine();
+                Console.WriteLine($"Recipe name: {recipe.Name}");
+
+                foreach (Ingredient ingredient in recipe.Ingredients)
+                {
+                    Console.WriteLine("Ingredient Detail");
+                    Console.WriteLine($"Ingredient Name: {ingredient.Name}");
+                    Console.WriteLine($"Ingredient Quantity: {ingredient.Quantity} {ingredient.UnitOfMeasurement}");
+                    Console.WriteLine($"Calories: {ingredient.Calories}");
+                    Console.WriteLine($"Food Group: {ingredient.FoodGroup}");
+                }
+
+                int totalCalories = recipe.Ingredients.Sum(k => k.Calories);
+                Console.WriteLine();
+                Console.WriteLine($"Total calories: {totalCalories}");
+
+                if (totalCalories > 300)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Total calories exceed 300!");
+                }
+                for (int k = 0; k < NumofSteps; k++)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
+                    Console.WriteLine($"Step {k + 1}:" + StepDescription);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid recipe number");
+            }
+
+            Console.WriteLine();
+
+
+        }
+
 
 
 
