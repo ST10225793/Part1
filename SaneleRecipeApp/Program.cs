@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static SaneleRecipeApp.RecipeDetails;
 
 namespace SaneleRecipeApp
 {
     internal class Program
     {
         static int menu;
-        private static String RecipeName;
-        private static int NumofIngredients;
-        private static String[] IngrName;
-        private static int[] IngrQuantity;
-        private static String[] UnitofMeasurement;
-        private static int NumofSteps;
-        private static String[] StepDescription;
+        
+
+        public static RecipeExceededCaloriesHandler RecipeExceededCaloriesEventHandler { get; private set; }
+
+        //public delegate void RecipeExceededCaloriesHandler(string recipeName, int totalCalories);
+        // public static event RecipeExceededCaloriesHandler RecipeExceededCaloriesEvent;
         static void Main(string[] args)
         {
             RecipeDetails obj = new RecipeDetails(); 
@@ -24,6 +24,7 @@ namespace SaneleRecipeApp
             Console.WriteLine("\t" + "\t" + "Welcome to Sanele's Recipe App <3");
 
             Console.WriteLine();
+            RecipeDetails.RecipeExceededCaloriesEvent += RecipeExceededCaloriesEventHandler;
 
             do
             {
@@ -31,36 +32,45 @@ namespace SaneleRecipeApp
                 Console.WriteLine("\t" + "Please select one of the following menu items: ");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("(1) Enter details of recipe");
-                Console.WriteLine("(2) Display full recipe");
-                Console.WriteLine("(3) Change recipe scaling");
-                Console.WriteLine("(4) Reset quatities to original values");
-                Console.WriteLine("(5) Clear data to enter new recipe");
+                Console.WriteLine("(2) Change recipe scaling");
+                Console.WriteLine("(3) Reset quatities to original values");
+                Console.WriteLine("(4) Display list of recipes");
+                Console.WriteLine("(5) Display recipe details");
+                Console.WriteLine("(6) Clear data to enter new recipe");
                 Console.WriteLine("");
                 Console.WriteLine("Make a choice");
                 Console.WriteLine();
+
                 menu = Convert.ToInt32(Console.ReadLine());
+
                 if (menu == 1)
                 {
                    RecipeDetails.StoreRecipe(); 
                 }
                 if(menu == 2)
                 {
-                    RecipeDetails.DisplayRecipe();
+                    RecipeDetails.ScalingQuantity();
                 }
                 if(menu == 3)
                 {
-                    RecipeDetails.ScalingQuantity();
-                }
-                if(menu == 4)
-                {
                     RecipeDetails.resetQuantityValues();
                 }
-                if(menu == 5)
+                if (menu == 4)
                 {
-                    RecipeDetails.Clear(IngrName, IngrQuantity, UnitofMeasurement, StepDescription);
+                    RecipeDetails.DisplayList();
 
                 }
-                else if (menu == 6)
+                if (menu == 5)
+                {
+                    RecipeDetails.DisplayRecipe();
+
+                }
+                if (menu == 6)
+                {
+                    RecipeDetails.Clear();
+
+                }
+                else if (menu == 7)
                 {
                     Environment.Exit(0);
                 }

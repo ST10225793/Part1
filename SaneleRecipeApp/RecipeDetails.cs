@@ -10,13 +10,18 @@ namespace SaneleRecipeApp
     {
         private static String RecipeName;
         private static int NumofIngredients;
-        private static String[] IngrName;
-        private static int[] IngrQuantity;
-        private static String[] UnitofMeasurement;
+        private static String IngrName;
+        private static int IngrQuantity;
+        private static String UnitofMeasurement;
         private static int NumofSteps;
-        private static String[] StepDescription;
+        private static String StepDescription;
         private static double scaledQuantity;
+        private static int Calories;
+        private static String FoodGroup;
 
+        public static List<Recipe> recipes = new List<Recipe>();
+        public delegate void RecipeExceededCaloriesHandler(string recipeName, int totalCalories);
+        public static event RecipeExceededCaloriesHandler RecipeExceededCaloriesEvent;
 
         public static void StoreRecipe()
         {
@@ -24,58 +29,161 @@ namespace SaneleRecipeApp
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Enter name of recipe: ");
             RecipeName = Console.ReadLine();
+
             Console.WriteLine("Recipe Name: " + RecipeName ) ;
+
+            // Prompt the user to enter ingredient details
             Console.WriteLine("Enter number of ingredients");
             NumofIngredients = Convert.ToInt32(Console.ReadLine());
-            IngrName = new string[NumofIngredients];
-            IngrQuantity = new int[NumofIngredients];
-            UnitofMeasurement = new string[NumofIngredients];
+            List<Ingredient> ingredients = new List<Ingredient>();
+            
 
             for (int i = 0; i < NumofIngredients; i++)
             {
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("\t" + "\t" + "Ingredient details");
+                Console.WriteLine("\t" + "\t" + "Ingredient details for recipe " + RecipeName);
                 Console.WriteLine();
                 Console.WriteLine($"Ingredient no.{i + 1}");
 
                 Console.ForegroundColor = ConsoleColor.White;
 
                 Console.WriteLine("Enter name of ingredient");
-                IngrName[i] = Console.ReadLine();
+                IngrName = Console.ReadLine();
+
                 Console.WriteLine("Enter quantity of ingredient");
-                IngrQuantity[i] = Convert.ToInt32(Console.ReadLine());
+                IngrQuantity = Convert.ToInt32(Console.ReadLine());
+
                 Console.WriteLine("Enter unit of measurement");
-                UnitofMeasurement[i] = Console.ReadLine();
+                UnitofMeasurement = Console.ReadLine();
+
+                Console.WriteLine("Enter number of calories");
+                Calories = Convert.ToInt32(Console.ReadLine()) ;
+
+                Console.WriteLine("Enter food group");
+                FoodGroup = Console.ReadLine();
+
+                // Create an Ingredient object with the entered details
+                Ingredient ingredient = new Ingredient(IngrName, IngrQuantity, UnitofMeasurement, Calories, FoodGroup);
+                ingredients.Add( ingredient );
             }
             Console.WriteLine();
             Console.WriteLine("Enter number of steps needed for this recipe");
             NumofSteps = Convert.ToInt32(Console.ReadLine());
-            StepDescription = new String[NumofSteps];
+           
             for (int j = 0; j < NumofSteps; j++)
             {
                 Console.WriteLine($"Enter the description for step {j + 1}");
-                StepDescription[j] = Console.ReadLine();
+                StepDescription = Console.ReadLine();
                 Console.WriteLine();
 
+            }
+            Recipe recipe = new Recipe(RecipeName, ingredients);
+            recipes.Add( recipe );
+
+            int totalCalories = ingredients.Sum(i => i.Calories);
+            if (totalCalories > 300)
+            {
+                RecipeExceededCaloriesEvent?.Invoke(RecipeName, totalCalories);
+            }
+
+           
+            Console.WriteLine();
+            Console.WriteLine("Recipe strored successfully!");
+            Console.WriteLine();
+        }
+
+        public static void DisplayList()
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\tRecipes List:");
+            Console.WriteLine();
+
+            List<Recipe> sortedRecipes = recipes.OrderBy(r => r.Name).ToList();
+
+            foreach (Recipe recipe in sortedRecipes)
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine($"\tRecipe Name: {recipe.Name}");
+
+                foreach (Ingredient ingredient in recipe.Ingredients)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("Ingredient Detail");
+                    Console.WriteLine($"Ingredient Name: {ingredient.Name}");
+                    Console.WriteLine($"Ingredient Quantity: {ingredient.Quantity} {ingredient.UnitOfMeasurement}");
+                    Console.WriteLine($"Calories: {ingredient.Calories}");
+                    Console.WriteLine($"Food Group: {ingredient.FoodGroup}");
+                }
+                for (int k = 0; k < NumofSteps; k++)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($"Step {k + 1}:" + StepDescription);
+                }
+
+                Console.WriteLine();
             }
         }
 
         public static void DisplayRecipe()
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("\t" + "Recipe Name: " + RecipeName);
-            for (int l = 0; l < NumofIngredients; l++) 
-            { 
-                Console.ForegroundColor= ConsoleColor.White;
-                Console.WriteLine("Ingredient Detail " + "\n" + "Ingredient Name: " + IngrName[l] + "\n"
-                + "Ingredient Quantity: " + IngrQuantity[l] + "\n" + "Unit of measurement: " + UnitofMeasurement[l]);
-            }
-            for(int k = 0; k < NumofSteps; k++)
-            {
-                Console.WriteLine();
-                Console.WriteLine($"Step {k + 1}:" + StepDescription[k]);
-            }
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("\tRecipes List:");
             Console.WriteLine();
+
+            List<Recipe> sortedRecipes = recipes.OrderBy(r => r.Name).ToList();
+
+            for(int k = 0; k < sortedRecipes.Count; k++)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"{k + 1} Recipe Name: {sortedRecipes[k].Name}");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Choose a recipe by entering its number:");
+            int recipeNumber = Convert.ToInt32(Console.ReadLine());
+
+            if(recipeNumber > 0 && recipeNumber <= sortedRecipes.Count)
+            {
+                // Display recipe details
+                Recipe recipe = sortedRecipes[recipeNumber - 1];
+
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine();
+                Console.WriteLine($"Recipe name: {recipe.Name}");
+
+                foreach(Ingredient ingredient in recipe.Ingredients)
+                {
+                    Console.WriteLine("Ingredient Detail");
+                    Console.WriteLine($"Ingredient Name: {ingredient.Name}");
+                    Console.WriteLine($"Ingredient Quantity: {ingredient.Quantity} {ingredient.UnitOfMeasurement}");
+                    Console.WriteLine($"Calories: {ingredient.Calories}");
+                    Console.WriteLine($"Food Group: { ingredient.FoodGroup}");
+                }
+
+                int totalCalories = recipe.Ingredients.Sum(k => k.Calories);
+                Console.WriteLine();
+                Console.WriteLine($"Total calories: {totalCalories}");
+
+                if(totalCalories> 300)
+                {
+                    Console.ForegroundColor= ConsoleColor.Red;
+                    Console.WriteLine("Total calories exceed 300!");
+                }
+                for (int k = 0; k < NumofSteps; k++)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
+                    Console.WriteLine($"Step {k + 1}:" + StepDescription);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid recipe number");
+            }
+            
+            Console.WriteLine();
+
+           
         }
 
         public static void ScalingQuantity()
@@ -87,17 +195,20 @@ namespace SaneleRecipeApp
             Console.WriteLine("Press (3) if you want to use a scale factor of 3");
             Console.WriteLine("Make a choice");
             scale = Convert.ToInt32(Console.ReadLine());
-            //int fact1 = 1/2, fact2 = 2, fact3 = 3;
+            while(!int.TryParse(Console.ReadLine(), out scale))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid choice");
+                Console.WriteLine("Make a choice");
+            }
             
             Console.WriteLine();
             if (scale == 1)
             {
                 for (int m = 0; m < NumofIngredients; m++)
                 {
-                    scaledQuantity = IngrQuantity[m] * 0.5;
-                    //IngrQuantity[m] = IngrQuantity[m] * 0.5;
-                   Console.WriteLine("New ingredient quantity: " + scaledQuantity + " " + UnitofMeasurement[m] +
-                        " of" + IngrName[m]);
+                    scaledQuantity = IngrQuantity * 0.5;
+                   Console.WriteLine("New ingredient quantity: " + scaledQuantity + " " + UnitofMeasurement +
+                        " of" + IngrName);
                 }
             }
 
@@ -105,10 +216,9 @@ namespace SaneleRecipeApp
             {
                 for (int m = 0; m < NumofIngredients; m++)
                 {
-                    scaledQuantity = IngrQuantity[m] * 2;
-                    //IngrQuantity[m] = IngrQuantity[m] * 2;
-                    Console.WriteLine("New ingredient quantity: " + scaledQuantity + " " + UnitofMeasurement[m] +
-                        " of" + IngrName[m]);
+                    scaledQuantity = IngrQuantity * 2;
+                    Console.WriteLine("New ingredient quantity: " + scaledQuantity + " " + UnitofMeasurement +
+                        " of" + IngrName);
                 }
             }
 
@@ -116,10 +226,9 @@ namespace SaneleRecipeApp
             {
                 for (int m = 0; m < NumofIngredients; m++)
                 {
-                    scaledQuantity = IngrQuantity[m] * 3;
-                    //IngrQuantity[m] = IngrQuantity[m] * 3;
-                    Console.WriteLine("New ingredient quantity: " + scaledQuantity + " " + UnitofMeasurement[m] + 
-                        " of" + IngrName[m]);
+                    scaledQuantity = IngrQuantity * 3;
+                    Console.WriteLine("New ingredient quantity: " + scaledQuantity + " " + UnitofMeasurement + 
+                        " of" + IngrName);
                 }
             }
             Console.WriteLine();
@@ -135,17 +244,17 @@ namespace SaneleRecipeApp
                 Console.WriteLine("Press (3) if you want to  reduce the quantity a scale factor of 3");
                 Console.WriteLine("Make a choice");
                 scale = Convert.ToInt32(Console.ReadLine());
-                //int fact1 = 1/2, fact2 = 2, fact3 = 3;
+                
 
                 Console.WriteLine();
                 if (scale == 1)
                 {
                     for (int m = 0; m < NumofIngredients; m++)
                     {
-                        scaledQuantity = IngrQuantity[m] / 0.5;
+                        scaledQuantity = IngrQuantity / 0.5;
                         //IngrQuantity[m] = IngrQuantity[m] * 0.5;
-                        Console.WriteLine("Original quantity value of " + IngrName[n] + ":"
-                   + IngrQuantity[n] + " " + UnitofMeasurement[n]);
+                        Console.WriteLine("Original quantity value of " + IngrName + ":"
+                   + IngrQuantity + " " + UnitofMeasurement);
                     }
                 }
 
@@ -153,10 +262,10 @@ namespace SaneleRecipeApp
                 {
                     for (int m = 0; m < NumofIngredients; m++)
                     {
-                        scaledQuantity = IngrQuantity[m] / 2;
+                        scaledQuantity = IngrQuantity / 2;
                         //IngrQuantity[m] = IngrQuantity[m] * 2;
-                        Console.WriteLine("Original quantity value of " + IngrName[n] + ":"
-                   + IngrQuantity[n] + " " + UnitofMeasurement[n]);
+                        Console.WriteLine("Original quantity value of " + IngrName + ":"
+                   + IngrQuantity + " " + UnitofMeasurement);
                     }
                 }
 
@@ -164,10 +273,10 @@ namespace SaneleRecipeApp
                 {
                     for (int m = 0; m < NumofIngredients; m++)
                     {
-                        scaledQuantity = IngrQuantity[m] / 3;
+                        scaledQuantity = IngrQuantity / 3;
                         //IngrQuantity[m] = IngrQuantity[m] * 3;
-                        Console.WriteLine("Original quantity value of " + IngrName[n] + ":"
-                    + IngrQuantity[n] + " " + UnitofMeasurement[n]);
+                        Console.WriteLine("Original quantity value of " + IngrName + ":"
+                    + IngrQuantity + " " + UnitofMeasurement);
                     }
 
 
@@ -175,15 +284,10 @@ namespace SaneleRecipeApp
                 Console.WriteLine();
             }
         }
-            public static void Clear(string[] IngrName, int[] IngrQuantity, string[] UnitofMeasurement, string[] StepDescription)
+            public static void Clear()
             {
-                Array.Clear(IngrName, 0, IngrName.Length);
-                Array.Clear(IngrQuantity, 0, IngrQuantity.Length);
-                Array.Clear(UnitofMeasurement, 0, UnitofMeasurement.Length);
-                Array.Clear(StepDescription, 0, StepDescription.Length);
+                recipes.Clear();
                 Console.WriteLine("Code cleared, Enter new recipe");
-
-
             }
         }
 
