@@ -19,7 +19,9 @@ namespace SaneleRecipeApp
         private static int Calories;
         private static String FoodGroup;
 
-        
+        public static List<Recipe> recipes = new List<Recipe>();
+        public delegate void RecipeExceededCaloriesHandler(string recipeName, int totalCalories);
+        public static event RecipeExceededCaloriesHandler RecipeExceededCaloriesEvent;
 
         public static void StoreRecipe()
         {
