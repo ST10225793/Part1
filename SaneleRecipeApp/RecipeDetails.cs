@@ -90,9 +90,40 @@ namespace SaneleRecipeApp
             Console.WriteLine();
         }
 
-       
+        public static void DisplayList()
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\tRecipes List:");
+            Console.WriteLine();
 
-        
+            List<Recipe> sortedRecipes = recipes.OrderBy(r => r.Name).ToList();
+
+            foreach (Recipe recipe in sortedRecipes)
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine($"\tRecipe Name: {recipe.Name}");
+
+                foreach (Ingredient ingredient in recipe.Ingredients)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("Ingredient Detail");
+                    Console.WriteLine($"Ingredient Name: {ingredient.Name}");
+                    Console.WriteLine($"Ingredient Quantity: {ingredient.Quantity} {ingredient.UnitOfMeasurement}");
+                    Console.WriteLine($"Calories: {ingredient.Calories}");
+                    Console.WriteLine($"Food Group: {ingredient.FoodGroup}");
+                }
+                for (int k = 0; k < NumofSteps; k++)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($"Step {k + 1}:" + StepDescription);
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+
+
 
         public static void ScalingQuantity()
         {
